@@ -14,6 +14,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
 
- 
+.letterSmall {
+  width: 2.75rem;
+  height: 3.37rem;
+
+  border-radius: 0.43rem;
+
+  font-size: 1.25rem;
+  font-weight: 500;
+  border: 1px solid #6363db;
 }
