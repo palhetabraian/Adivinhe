@@ -1,0 +1,13 @@
+/*responsavel pela estilizacao de todo o Header*/
+
+/*Envolve toda a div*/
+.container {
+
+}
+
+
+/*Tratando o container da logo*/
+.container > img {
+  height: 3.75rem;
+  width: 19.37;
+}
