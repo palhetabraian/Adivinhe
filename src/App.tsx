@@ -14,12 +14,13 @@ export default function App() {
       <main>
         <Header current={5} max={10} onRestart={handleRestartGame} />
         <Tip tip="Uma das linguagens de programacao mais utilizadas!" />
-        <Letter value="R" />
-        <Letter value="e" />
-        <Letter value="a" />
-        <Letter value="c" />
-        <Letter value="t" />
-
+        <div className={styles.word}>
+          <Letter value="R" />
+          <Letter value="e" />
+          <Letter value="a" />
+          <Letter value="c" />
+          <Letter value="t" />
+        </div>
       </main>
     </div>
   );
