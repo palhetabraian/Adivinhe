@@ -8,13 +8,16 @@ import { Tip } from './components/Tip';
 import { Letter } from './components/Letter';
 import { Input } from './components/Input';
 import { Button } from './components/Button';
-import { LettersUsed } from './components/LettersUsed';
+import { LettersUsed, LettersUsedProps } from './components/LettersUsed';
 
 export default function App() {
   // responsavel pelas tentativas
   const [attempts, setAttempts] = useState(0);
 
   const [letter, setLetter] = useState('');
+
+  //criando letra utilizada pelo usuario
+  const [letterUsed, setLettersUsed] = useState<LettersUsedProps[]>([]);
 
   //estado para o desafio
   //comeca nullo(vazio)
@@ -71,7 +74,7 @@ export default function App() {
           <Button title="Confirmar" />
         </div>
 
-        <LettersUsed />
+        <LettersUsed data={letterUsed} />
       </main>
     </div>
   );
