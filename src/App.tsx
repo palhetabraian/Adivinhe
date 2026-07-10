@@ -47,17 +47,21 @@ export default function App() {
     startGame();
   }, []);
 
+  //verifica se existe o desafio
+  if (!challenge) {
+    return;
+  }
+
   return (
     <div className={styles.container}>
       <main>
         <Header current={attempts} max={10} onRestart={handleRestartGame} />
         <Tip tip="Uma das linguagens de programacao mais utilizadas!" />
         <div className={styles.word}>
-          <Letter value="R" />
-          <Letter value="e" />
-          <Letter value="a" />
-          <Letter value="c" />
-          <Letter value="t" />
+          {/* Divide o array em diversos e mapeia cada componente*/}
+          {challenge.word.split('').map(() => (
+            <Letter value="" />
+          ))}
         </div>
 
         <h4>Palpite</h4>
