@@ -11,11 +11,9 @@ import { Button } from './components/Button';
 import { LettersUsed, LettersUsedProps } from './components/LettersUsed';
 
 export default function App() {
-  // responsavel pelo score
+  // responsavel por quantos acertos
   const [score, setScore] = useState(0);
 
-  // responsavel pelas tentativas
-  const [attempts, setAttempts] = useState(0);
   //estado das letras
   const [letter, setLetter] = useState('');
 
@@ -42,10 +40,12 @@ export default function App() {
     //retorna a letra aleatorio quando o componente é renderizado
     setChallenge(randomWords);
     // reseta o jogo para comecar com 0 pontuacao
-    setAttempts(0);
+    setScore(0);
 
     //passando o palpite para comecar com a letra vazia
     setLetter('');
+
+    setLettersUsed([]);
   }
 
   //Funcao responsavel pelo botao de confirmar
@@ -103,13 +103,23 @@ export default function App() {
   return (
     <div className={styles.container}>
       <main>
-        <Header current={attempts} max={10} onRestart={handleRestartGame} />
+        <Header current={score} max={10} onRestart={handleRestartGame} />
         <Tip tip={challenge.tip} />
         <div className={styles.word}>
           {/* Divide o array em diversos e mapeia cada componente*/}
-          {challenge.word.split('').map(() => (
-            <Letter value="" />
-          ))}
+          {challenge.word.split('').map((letter, index) => {
+            const letterUsed = lettersUsed.find(
+              (used) =>
+                used.value.toLocaleUpperCase() === letter.toLocaleUpperCase()
+            );
+            return (
+              <Letter
+                key={index}
+                value={letterUsed?.value}
+                color={letterUsed?.correct ? 'correct' : 'default'}
+              />
+            );
+          })}
         </div>
 
         <h4>Palpite</h4>
