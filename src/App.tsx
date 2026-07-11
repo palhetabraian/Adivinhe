@@ -11,9 +11,12 @@ import { Button } from './components/Button';
 import { LettersUsed, LettersUsedProps } from './components/LettersUsed';
 
 export default function App() {
+  // responsavel pelo score
+  const [score, setScore] = useState(0);
+
   // responsavel pelas tentativas
   const [attempts, setAttempts] = useState(0);
-
+  //estado das letras
   const [letter, setLetter] = useState('');
 
   //criando letra utilizada pelo usuario
@@ -69,7 +72,20 @@ export default function App() {
       return alert('Voce ja utilizou a letra ' + value);
     }
 
-    setLettersUsed((prevState) => [...prevState, { value, correct: false }]);
+    //cria os acertos
+    const hits = challenge.word
+      .toLocaleUpperCase()
+      .split('')
+      .filter((char) => char === value).length;
+
+    //cria os acertos
+    const correct = hits > 0;
+    //score dos acertos
+    const currentScore = score + hits;
+
+    // mantem as letras ja utilizadas e adiciona uma nova
+    setLettersUsed((prevState) => [...prevState, { value, correct }]);
+    setScore(currentScore);
 
     setLetter('');
   }
@@ -88,7 +104,7 @@ export default function App() {
     <div className={styles.container}>
       <main>
         <Header current={attempts} max={10} onRestart={handleRestartGame} />
-        <Tip tip="Uma das linguagens de programacao mais utilizadas!" />
+        <Tip tip={challenge.tip} />
         <div className={styles.word}>
           {/* Divide o array em diversos e mapeia cada componente*/}
           {challenge.word.split('').map(() => (
