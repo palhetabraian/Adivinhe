@@ -17,7 +17,7 @@ export default function App() {
   const [letter, setLetter] = useState('');
 
   //criando letra utilizada pelo usuario
-  const [letterUsed, setLettersUsed] = useState<LettersUsedProps[]>([]);
+  const [lettersUsed, setLettersUsed] = useState<LettersUsedProps[]>([]);
 
   //estado para o desafio
   //comeca nullo(vazio)
@@ -42,6 +42,35 @@ export default function App() {
     setAttempts(0);
 
     //passando o palpite para comecar com a letra vazia
+    setLetter('');
+  }
+
+  //Funcao responsavel pelo botao de confirmar
+  function handleConfirm() {
+    //verifica se existe o desafio
+    if (!challenge) {
+      return;
+    }
+
+    // se o usuario nao digitar exibe alerta
+    if (!letter.trim()) {
+      return alert('Digite uma letra');
+    }
+
+    //recupera o que o usuario digitou
+    const value = letter.toUpperCase();
+    // procura na lista de letras utilizadas para verificar se essa letra já foi informada anteriormente
+    const exist = lettersUsed.find(
+      (used) => used.value.toUpperCase() === value
+    );
+
+    //verifica se o usuario ja utilizou a letra
+    if (exist) {
+      return alert('Voce ja utilizou a letra ' + value);
+    }
+
+    setLettersUsed((prevState) => [...prevState, { value, correct: false }]);
+
     setLetter('');
   }
 
@@ -70,11 +99,17 @@ export default function App() {
         <h4>Palpite</h4>
 
         <div className={styles.guess}>
-          <Input autoFocus maxLength={1} placeholder="?" />
-          <Button title="Confirmar" />
+          <Input
+            autoFocus
+            maxLength={1}
+            placeholder="?"
+            onChange={(e) => setLetter(e.target.value)}
+            value={letter}
+          />
+          <Button title="Confirmar" onClick={handleConfirm} />
         </div>
 
-        <LettersUsed data={letterUsed} />
+        <LettersUsed data={lettersUsed} />
       </main>
     </div>
   );
