@@ -72,6 +72,7 @@ export default function App() {
 
     //verifica se o usuario ja utilizou a letra
     if (exist) {
+      setLetter('');
       return alert('Voce ja utilizou a letra ' + value);
     }
 
@@ -93,10 +94,35 @@ export default function App() {
     setLetter('');
   }
 
+  //funcao para final do jogo
+  function endGame(message: string) {
+    alert(message);
+    startGame();
+  }
+
   // usando o useEffect para toda vez que o nosso componente for renderizado ele iniciar o startgame()
   useEffect(() => {
     startGame();
   }, []);
+
+  //usando useEffect para observar quando o jogo acabou
+  useEffect(() => {
+    if (!challenge) {
+      return;
+    }
+
+    //funcao assincrona para executar apos um tempo
+    setTimeout(() => {
+      if (score === challenge.word.length) {
+        return endGame('Parabéns, voce descobriu a palavra!');
+      }
+
+      const attemptLimit = challenge.word.length + ATTEMPTS_MARGIN;
+      if (lettersUsed.length === attemptLimit) {
+        return endGame('Que pena, você usou todas as tentativas!');
+      }
+    }, 200);
+  }, [score, lettersUsed.length]); //passando o useEffect para ver esses estados
 
   //verifica se existe o desafio
   if (!challenge) {
