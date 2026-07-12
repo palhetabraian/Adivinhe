@@ -10,6 +10,9 @@ import { Input } from './components/Input';
 import { Button } from './components/Button';
 import { LettersUsed, LettersUsedProps } from './components/LettersUsed';
 
+//tentativas maximas margin
+const ATTEMPTS_MARGIN = 5;
+
 export default function App() {
   // responsavel por quantos acertos
   const [score, setScore] = useState(0);
@@ -103,7 +106,11 @@ export default function App() {
   return (
     <div className={styles.container}>
       <main>
-        <Header current={score} max={10} onRestart={handleRestartGame} />
+        <Header
+          current={lettersUsed.length}
+          max={challenge.word.length + ATTEMPTS_MARGIN}
+          onRestart={handleRestartGame}
+        />
         <Tip tip={challenge.tip} />
         <div className={styles.word}>
           {/* Divide o array em diversos e mapeia cada componente*/}
